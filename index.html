@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>어서오세요</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: #20312c;
+      background: #f7f6f2;
+      font-synthesis: none;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(ellipse at 13% 14%, rgba(211, 226, 211, .7), transparent 32%),
+        radial-gradient(ellipse at 89% 83%, rgba(245, 224, 195, .55), transparent 35%),
+        #f7f6f2;
+    }
+
+    main {
+      width: min(100%, 560px);
+      padding: clamp(34px, 8vw, 64px);
+      border: 1px solid rgba(32, 49, 44, .09);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 24px 70px rgba(32, 49, 44, .08);
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .mark {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 30px;
+      border-radius: 18px;
+      background: #e7eee6;
+      color: #41624f;
+      font-size: 25px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #728078;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 7vw, 42px);
+      letter-spacing: -.06em;
+      line-height: 1.25;
+    }
+
+    .intro {
+      margin: 16px 0 32px;
+      color: #738078;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    form { text-align: left; }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      color: #47564e;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      min-width: 0;
+      flex: 1;
+      height: 54px;
+      padding: 0 16px;
+      border: 1px solid #dce2dc;
+      border-radius: 13px;
+      outline: none;
+      background: #fff;
+      color: #20312c;
+      font: inherit;
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    input::placeholder { color: #a5ada7; }
+    input:focus { border-color: #668573; box-shadow: 0 0 0 4px rgba(102, 133, 115, .13); }
+
+    button {
+      min-width: 104px;
+      height: 54px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 13px;
+      background: #365846;
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s, transform .18s;
+    }
+
+    button:hover { background: #294736; transform: translateY(-1px); }
+    button:focus-visible { outline: 3px solid #a9c1ae; outline-offset: 3px; }
+
+    .greeting {
+      min-height: 62px;
+      margin: 24px 0 0;
+      padding: 18px 14px;
+      border-radius: 14px;
+      background: #f2f5f1;
+      color: #365846;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .greeting:empty { visibility: hidden; }
+
+    @media (max-width: 420px) {
+      .field { flex-direction: column; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-hidden="true">✳</div>
+    <p class="eyebrow">A WARM WELCOME</p>
+    <h1>반가워요!</h1>
+    <p class="intro">이름을 알려주시면 따뜻한 인사로 맞이할게요.</p>
+
+    <form id="welcome-form">
+      <label for="name">이름</label>
+      <div class="field">
+        <input id="name" name="name" type="text" placeholder="이름을 입력해 주세요" autocomplete="name" required>
+        <button type="submit">인사받기</button>
+      </div>
+    </form>
+    <p class="greeting" id="greeting" role="status" aria-live="polite"></p>
+  </main>
+
+  <script>
+    const form = document.querySelector('#welcome-form');
+    const nameInput = document.querySelector('#name');
+    const greeting = document.querySelector('#greeting');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = nameInput.value.trim();
+      if (!name) {
+        nameInput.focus();
+        return;
+      }
+      greeting.textContent = `${name} 님, 어서오세요`;
+    });
+  </script>
+</body>
+</html>
